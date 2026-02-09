@@ -308,6 +308,24 @@ include '../includes/header.php';
         cursor: default;
     }
     
+    .btn-chat-small {
+        padding: 12px 20px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-block;
+        font-size: 1.2rem;
+    }
+    
+    .btn-chat-small:hover {
+        background: #218838;
+        color: white;
+        transform: scale(1.1);
+    }
+    
     .empty-state {
         text-align: center;
         padding: 80px 20px;
@@ -449,6 +467,9 @@ include '../includes/header.php';
                                 <?= $course['progress'] > 0 ? 'Продовжити навчання' : 'Почати навчання' ?>
                             </a>
                         <?php endif; ?>
+                        <a href="javascript:void(0)" onclick="openChatForCourse(<?= $course['id'] ?>)" class="btn-chat-small" title="Написати тренеру">
+                            💬
+                        </a>
                     </div>
                 </div>
             </div>
@@ -456,5 +477,23 @@ include '../includes/header.php';
         <?php endforeach; ?>
     <?php endif; ?>
 </div>
+
+<script>
+function openChatForCourse(courseId) {
+    fetch('create-chat.php?course_id=' + courseId)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = '../chat.php?id=' + data.chat_id;
+            } else {
+                alert('Помилка: ' + (data.message || 'Не вдалося відкрити чат'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Помилка підключення');
+        });
+}
+</script>
 
 <?php include '../includes/footer.php'; ?>

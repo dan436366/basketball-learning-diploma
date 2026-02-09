@@ -642,7 +642,7 @@ function openChat() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = 'chat.php?id=' + data.chat_id;
+                window.location.href = '../chat.php?id=' + data.chat_id;
             } else {
                 alert('Помилка: ' + (data.message || 'Не вдалося відкрити чат'));
             }
