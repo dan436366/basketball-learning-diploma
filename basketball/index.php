@@ -90,13 +90,26 @@ include 'includes/header.php';
         font-size: 1.1rem;
     }
     
+    /* Виправлення сітки для карток курсів */
+    .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+    
+    @media (max-width: 768px) {
+        .courses-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
     .course-card {
         background: white;
         border-radius: 15px;
         overflow: hidden;
         box-shadow: 0 5px 25px rgba(0,0,0,0.1);
         transition: all 0.3s;
-        margin-bottom: 30px;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -131,6 +144,7 @@ include 'includes/header.php';
         font-size: 0.85rem;
         margin-bottom: 10px;
         font-weight: 600;
+        width: fit-content;
     }
     
     .level-beginner { background: #e3f2fd; color: #1976d2; }
@@ -142,6 +156,7 @@ include 'includes/header.php';
         margin: 10px 0;
         color: #333;
         font-weight: 600;
+        line-height: 1.4;
     }
     
     .course-meta {
@@ -151,6 +166,7 @@ include 'includes/header.php';
         margin: 10px 0;
         color: #666;
         font-size: 0.9rem;
+        flex-wrap: wrap;
     }
     
     .course-price {
@@ -158,6 +174,20 @@ include 'includes/header.php';
         color: #667eea;
         font-weight: 700;
         margin-top: auto;
+        padding-top: 15px;
+    }
+    
+    /* Виправлення сітки для тренерів */
+    .trainers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+    }
+    
+    @media (max-width: 768px) {
+        .trainers-grid {
+            grid-template-columns: 1fr;
+        }
     }
     
     .trainer-card {
@@ -204,6 +234,18 @@ include 'includes/header.php';
         background: #f8f9fa;
     }
     
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+    }
+    
+    @media (max-width: 768px) {
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
     .feature-box {
         text-align: center;
         padding: 30px;
@@ -248,6 +290,19 @@ include 'includes/header.php';
     .rating {
         color: #ffc107;
     }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px 35px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
 </style>
 
 <!-- Hero секція -->
@@ -266,27 +321,21 @@ include 'includes/header.php';
             <h2>Чому обирають нас</h2>
             <p>Ваш шлях до професійного баскетболу</p>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="feature-box">
-                    <div class="feature-icon">🎥</div>
-                    <h3 class="feature-title">Відеоуроки HD</h3>
-                    <p class="feature-text">Якісні відео з детальним поясненням техніки</p>
-                </div>
+        <div class="features-grid">
+            <div class="feature-box">
+                <div class="feature-icon">🎥</div>
+                <h3 class="feature-title">Відеоуроки HD</h3>
+                <p class="feature-text">Якісні відео з детальним поясненням техніки</p>
             </div>
-            <div class="col-md-4">
-                <div class="feature-box">
-                    <div class="feature-icon">👨‍🏫</div>
-                    <h3 class="feature-title">Професійні тренери</h3>
-                    <p class="feature-text">Досвідчені наставники з багаторічною практикою</p>
-                </div>
+            <div class="feature-box">
+                <div class="feature-icon">👨‍🏫</div>
+                <h3 class="feature-title">Професійні тренери</h3>
+                <p class="feature-text">Досвідчені наставники з багаторічною практикою</p>
             </div>
-            <div class="col-md-4">
-                <div class="feature-box">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Персональні плани</h3>
-                    <p class="feature-text">Індивідуальний підхід до кожного учня</p>
-                </div>
+            <div class="feature-box">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Персональні плани</h3>
+                <p class="feature-text">Індивідуальний підхід до кожного учня</p>
             </div>
         </div>
     </div>
@@ -299,29 +348,27 @@ include 'includes/header.php';
             <h2>Популярні курси</h2>
             <p>Найкращі програми навчання від наших тренерів</p>
         </div>
-        <div class="row">
+        <div class="courses-grid">
             <?php foreach ($popularCourses as $course): ?>
-            <div class="col-md-4">
-                <div class="course-card">
-                    <div class="course-thumbnail">🏀</div>
-                    <div class="course-content">
-                        <span class="course-level level-<?= $course['level'] ?>">
-                            <?php
-                            $levels = ['beginner' => 'Початковий', 'intermediate' => 'Середній', 'advanced' => 'Просунутий'];
-                            echo $levels[$course['level']];
-                            ?>
-                        </span>
-                        <h3 class="course-title"><?= htmlspecialchars($course['title']) ?></h3>
-                        <div class="course-meta">
-                            <span>👤 <?= htmlspecialchars($course['first_name'] . ' ' . $course['last_name']) ?></span>
-                            <span>👥 <?= $course['students_count'] ?></span>
-                            <?php if ($course['avg_rating']): ?>
-                            <span class="rating">⭐ <?= number_format($course['avg_rating'], 1) ?></span>
-                            <?php endif; ?>
-                        </div>
-                        <div class="course-price">
-                            <?= $course['is_free'] ? '<span style="color: #28a745;">Безкоштовно</span>' : formatPrice($course['price']) ?>
-                        </div>
+            <div class="course-card">
+                <div class="course-thumbnail">🏀</div>
+                <div class="course-content">
+                    <span class="course-level level-<?= $course['level'] ?>">
+                        <?php
+                        $levels = ['beginner' => 'Початковий', 'intermediate' => 'Середній', 'advanced' => 'Просунутий'];
+                        echo $levels[$course['level']];
+                        ?>
+                    </span>
+                    <h3 class="course-title"><?= htmlspecialchars($course['title']) ?></h3>
+                    <div class="course-meta">
+                        <span>👤 <?= htmlspecialchars($course['first_name'] . ' ' . $course['last_name']) ?></span>
+                        <span>👥 <?= $course['students_count'] ?></span>
+                        <?php if ($course['avg_rating']): ?>
+                        <span class="rating">⭐ <?= number_format($course['avg_rating'], 1) ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="course-price">
+                        <?= $course['is_free'] ? '<span style="color: #28a745;">Безкоштовно</span>' : formatPrice($course['price']) ?>
                     </div>
                 </div>
             </div>
@@ -340,19 +387,17 @@ include 'includes/header.php';
             <h2>Наші тренери</h2>
             <p>Професіонали своєї справи</p>
         </div>
-        <div class="row">
+        <div class="trainers-grid">
             <?php foreach ($trainers as $trainer): ?>
-            <div class="col-md-4">
-                <div class="trainer-card">
-                    <div class="trainer-avatar">
-                        <?= strtoupper(mb_substr($trainer['first_name'], 0, 1)) ?>
-                    </div>
-                    <h3 class="trainer-name"><?= htmlspecialchars($trainer['first_name'] . ' ' . $trainer['last_name']) ?></h3>
-                    <?php if ($trainer['experience_years']): ?>
-                    <p style="color: #666;">Досвід: <?= $trainer['experience_years'] ?> років</p>
-                    <?php endif; ?>
-                    <p class="trainer-courses"><?= $trainer['courses_count'] ?> курсів</p>
+            <div class="trainer-card">
+                <div class="trainer-avatar">
+                    <?= strtoupper(mb_substr($trainer['first_name'], 0, 1)) ?>
                 </div>
+                <h3 class="trainer-name"><?= htmlspecialchars($trainer['first_name'] . ' ' . $trainer['last_name']) ?></h3>
+                <?php if ($trainer['experience_years']): ?>
+                <p style="color: #666;">Досвід: <?= $trainer['experience_years'] ?> років</p>
+                <?php endif; ?>
+                <p class="trainer-courses"><?= $trainer['courses_count'] ?> курсів</p>
             </div>
             <?php endforeach; ?>
         </div>
@@ -367,7 +412,7 @@ include 'includes/header.php';
         <?php if (isLoggedIn()): ?>
             <a href="courses.php" class="btn-hero">Вибрати курс</a>
         <?php else: ?>
-            <a href="register.php" class="btn-hero">Зареєструватись зараз</a>
+            <a href="register.php" class="btn-hero">Зареєструватися зараз</a>
         <?php endif; ?>
     </div>
 </section>

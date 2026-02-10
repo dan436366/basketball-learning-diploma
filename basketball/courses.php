@@ -160,10 +160,14 @@ include 'includes/header.php';
         cursor: pointer;
         transition: all 0.3s;
         height: 46px;
+        text-decoration: none;
+        display: inline-block;
+        line-height: 26px;
     }
     
     .btn-reset:hover {
         background: #f8f9fa;
+        color: #667eea;
     }
     
     .results-header {
@@ -180,12 +184,18 @@ include 'includes/header.php';
         color: #666;
     }
     
-    .sort-dropdown {
-        padding: 8px 15px;
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        cursor: pointer;
+    /* Виправлення сітки для карток курсів */
+    .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+    
+    @media (max-width: 768px) {
+        .courses-grid {
+            grid-template-columns: 1fr;
+        }
     }
     
     .course-card {
@@ -194,7 +204,6 @@ include 'includes/header.php';
         overflow: hidden;
         box-shadow: 0 5px 25px rgba(0,0,0,0.1);
         transition: all 0.3s;
-        margin-bottom: 30px;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -241,6 +250,7 @@ include 'includes/header.php';
         font-size: 0.85rem;
         margin-bottom: 10px;
         font-weight: 600;
+        width: fit-content;
     }
     
     .level-beginner { background: #e3f2fd; color: #1976d2; }
@@ -252,6 +262,7 @@ include 'includes/header.php';
         margin: 10px 0;
         color: #333;
         font-weight: 600;
+        line-height: 1.4;
     }
     
     .course-description {
@@ -277,6 +288,7 @@ include 'includes/header.php';
         align-items: center;
         padding-top: 15px;
         border-top: 2px solid #f5f5f5;
+        margin-top: auto;
     }
     
     .course-price {
@@ -311,6 +323,7 @@ include 'includes/header.php';
         justify-content: center;
         gap: 10px;
         margin-top: 40px;
+        flex-wrap: wrap;
     }
     
     .pagination a, .pagination span {
@@ -412,40 +425,38 @@ include 'includes/header.php';
             <p>Спробуйте змінити параметри пошуку</p>
         </div>
     <?php else: ?>
-        <div class="row">
+        <div class="courses-grid">
             <?php foreach ($courses as $course): ?>
-            <div class="col-md-4">
-                <div class="course-card">
-                    <div class="course-thumbnail">
-                        🏀
-                        <?php if ($course['students_count'] > 10): ?>
-                        <div class="course-badge">🔥 Популярний</div>
+            <div class="course-card">
+                <div class="course-thumbnail">
+                    🏀
+                    <?php if ($course['students_count'] > 10): ?>
+                    <div class="course-badge">🔥 Популярний</div>
+                    <?php endif; ?>
+                </div>
+                <div class="course-content">
+                    <span class="course-level level-<?= $course['level'] ?>">
+                        <?php
+                        $levels = ['beginner' => 'Початковий', 'intermediate' => 'Середній', 'advanced' => 'Просунутий'];
+                        echo $levels[$course['level']];
+                        ?>
+                    </span>
+                    <h3 class="course-title"><?= htmlspecialchars($course['title']) ?></h3>
+                    <p class="course-description">
+                        <?= htmlspecialchars(mb_substr($course['description'], 0, 100)) ?>...
+                    </p>
+                    <div class="course-meta">
+                        <span>👨‍🏫 <?= htmlspecialchars($course['first_name'] . ' ' . $course['last_name']) ?></span>
+                        <span>👥 <?= $course['students_count'] ?></span>
+                        <?php if ($course['avg_rating']): ?>
+                        <span class="rating">⭐ <?= number_format($course['avg_rating'], 1) ?></span>
                         <?php endif; ?>
                     </div>
-                    <div class="course-content">
-                        <span class="course-level level-<?= $course['level'] ?>">
-                            <?php
-                            $levels = ['beginner' => 'Початковий', 'intermediate' => 'Середній', 'advanced' => 'Просунутий'];
-                            echo $levels[$course['level']];
-                            ?>
-                        </span>
-                        <h3 class="course-title"><?= htmlspecialchars($course['title']) ?></h3>
-                        <p class="course-description">
-                            <?= htmlspecialchars(mb_substr($course['description'], 0, 100)) ?>...
-                        </p>
-                        <div class="course-meta">
-                            <span>👨‍🏫 <?= htmlspecialchars($course['first_name'] . ' ' . $course['last_name']) ?></span>
-                            <span>👥 <?= $course['students_count'] ?></span>
-                            <?php if ($course['avg_rating']): ?>
-                            <span class="rating">⭐ <?= number_format($course['avg_rating'], 1) ?></span>
-                            <?php endif; ?>
+                    <div class="course-footer">
+                        <div class="course-price">
+                            <?= $course['is_free'] ? '<span style="color: #28a745;">Безкоштовно</span>' : formatPrice($course['price']) ?>
                         </div>
-                        <div class="course-footer">
-                            <div class="course-price">
-                                <?= $course['is_free'] ? '<span style="color: #28a745;">Безкоштовно</span>' : formatPrice($course['price']) ?>
-                            </div>
-                            <a href="course.php?id=<?= $course['id'] ?>" class="btn-view-course">Детальніше</a>
-                        </div>
+                        <a href="course.php?id=<?= $course['id'] ?>" class="btn-view-course">Детальніше</a>
                     </div>
                 </div>
             </div>
