@@ -166,34 +166,45 @@ include '../includes/header.php';
     .review-header {
         display: flex;
         justify-content: space-between;
-        align-items: start;
+        align-items: flex-start;
         margin-bottom: 15px;
+        gap: 10px;
+        flex-wrap: wrap;
     }
     
     .reviewer-info {
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 12px;
+        min-width: 0;
+        flex: 1;
     }
     
     .reviewer-avatar {
-        width: 50px;
-        height: 50px;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
         background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 700;
+        flex-shrink: 0;
     }
     
+    .reviewer-details {
+        min-width: 0;
+        overflow: hidden;
+    }
+
     .reviewer-details h4 {
-        font-size: 1.1rem;
+        font-size: 1rem;
         color: #333;
         font-weight: 700;
         margin-bottom: 3px;
+        word-break: break-word;
     }
     
     .review-course {
@@ -250,6 +261,19 @@ include '../includes/header.php';
         .reviews-overview {
             grid-template-columns: 1fr;
         }
+    }
+
+    @media (max-width: 575px) {
+        .page-header { padding: 24px 0; margin-bottom: 20px; }
+        .page-header h1 { font-size: 1.6rem; }
+        .rating-summary { padding: 20px; }
+        .avg-rating { font-size: 2.8rem; }
+        .rating-distribution { padding: 16px; }
+        .rating-bar { gap: 8px; }
+        .rating-label { min-width: 60px; font-size: 0.85rem; }
+        .review-item { padding: 16px; }
+        .review-comment { padding: 10px 12px; font-size: 0.9rem; }
+        .stars { font-size: 1rem; }
     }
 </style>
 

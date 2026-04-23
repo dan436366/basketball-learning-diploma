@@ -45,81 +45,113 @@ include 'includes/header.php';
     .trainers-section {
         padding: 60px 0;
     }
+
+    .trainers-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+        .trainers-hero h1 { font-size: 1.8rem; }
+        .trainers-hero p { font-size: 1rem; }
+        .trainers-section { padding: 30px 0; }
+        .trainers-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
     
     .trainer-card {
         background: white;
         border-radius: 15px;
-        padding: 30px;
+        padding: 25px;
         box-shadow: 0 5px 25px rgba(0,0,0,0.1);
         transition: all 0.3s;
-        margin-bottom: 30px;
-        height: 100%;
         display: flex;
         flex-direction: column;
+        min-width: 0;
     }
     
     .trainer-card:hover {
-        transform: translateY(-10px);
+        transform: translateY(-5px);
         box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     }
     
     .trainer-header {
         display: flex;
-        gap: 20px;
+        gap: 15px;
         margin-bottom: 20px;
-        align-items: start;
+        align-items: flex-start;
+        min-width: 0;
     }
     
     .trainer-avatar {
-        width: 100px;
-        height: 100px;
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 2.5rem;
+        font-size: 1.8rem;
         font-weight: 700;
         flex-shrink: 0;
+    }
+
+    @media (min-width: 769px) {
+        .trainer-avatar {
+            width: 90px;
+            height: 90px;
+            font-size: 2.2rem;
+        }
     }
     
     .trainer-info {
         flex: 1;
+        min-width: 0;
+        overflow: hidden;
     }
     
     .trainer-name {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
         color: #333;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         font-weight: 700;
+        word-break: break-word;
+    }
+
+    @media (min-width: 769px) {
+        .trainer-name { font-size: 1.5rem; }
     }
     
     .trainer-experience {
         color: #667eea;
         font-weight: 600;
-        font-size: 1.05rem;
-        margin-bottom: 10px;
+        font-size: 0.95rem;
+        margin-bottom: 8px;
     }
     
     .trainer-stats {
         display: flex;
-        gap: 20px;
+        gap: 12px;
         flex-wrap: wrap;
-        margin-top: 10px;
+        margin-top: 8px;
     }
     
     .stat-item {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 4px;
         color: #666;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
     }
     
     .stat-item strong {
         color: #333;
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .trainer-bio {
@@ -127,6 +159,7 @@ include 'includes/header.php';
         line-height: 1.7;
         margin: 15px 0;
         flex-grow: 1;
+        word-break: break-word;
     }
     
     .trainer-rating {
@@ -134,19 +167,20 @@ include 'includes/header.php';
         align-items: center;
         gap: 8px;
         margin: 15px 0;
-        padding: 12px;
+        padding: 10px 12px;
         background: #f8f9fa;
         border-radius: 8px;
+        flex-wrap: wrap;
     }
     
     .rating-stars {
         color: #ffc107;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
     
     .rating-text {
         color: #666;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
     }
     
     .btn-view-courses {
@@ -161,6 +195,7 @@ include 'includes/header.php';
         display: block;
         transition: all 0.3s;
         margin-top: auto;
+        box-sizing: border-box;
     }
     
     .btn-view-courses:hover {
@@ -200,9 +235,9 @@ include 'includes/header.php';
                 <p>Скоро з'являться нові тренери</p>
             </div>
         <?php else: ?>
-            <div class="row">
+            <div class="trainers-grid">
                 <?php foreach ($trainers as $trainer): ?>
-                <div class="col-md-6">
+                <div>
                     <div class="trainer-card">
                         <div class="trainer-header">
                             <div class="trainer-avatar">

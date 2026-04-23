@@ -122,34 +122,43 @@ include 'includes/header.php';
     .profile-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 60px 0;
+        padding: 40px 0;
         margin-bottom: 40px;
+        overflow: hidden;
     }
     
     .profile-info-header {
         display: flex;
         align-items: center;
-        gap: 30px;
+        gap: 20px;
+        min-width: 0;
     }
     
     .profile-avatar-large {
-        width: 120px;
-        height: 120px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         background: white;
         color: #667eea;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 3rem;
+        font-size: 2rem;
         font-weight: 700;
         border: 4px solid rgba(255,255,255,0.3);
+        flex-shrink: 0;
     }
     
+    .profile-details {
+        min-width: 0;
+        overflow: hidden;
+    }
+
     .profile-details h1 {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
+        font-size: 1.8rem;
+        margin-bottom: 8px;
         font-weight: 700;
+        word-break: break-word;
     }
     
     .profile-role {
@@ -316,6 +325,17 @@ include 'includes/header.php';
         .form-row {
             grid-template-columns: 1fr;
         }
+    }
+
+    @media (max-width: 575px) {
+        .profile-header { padding: 24px 0; margin-bottom: 20px; }
+        .profile-avatar-large { width: 60px; height: 60px; font-size: 1.5rem; }
+        .profile-details h1 { font-size: 1.3rem; }
+        .profile-role { font-size: 0.9rem; }
+        .form-card { padding: 16px; }
+        .stat-card { padding: 14px; }
+        .info-item { flex-direction: column; gap: 2px; }
+        .info-value { font-size: 0.9rem; word-break: break-all; }
     }
 </style>
 

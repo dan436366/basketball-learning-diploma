@@ -197,6 +197,16 @@ include 'includes/header.php';
             grid-template-columns: 1fr;
         }
     }
+
+    @media (max-width: 575px) {
+        .courses-hero h1 { font-size: 1.6rem; }
+        .courses-hero { padding: 30px 0; }
+        .filters-section { padding: 16px; }
+        .filter-row { flex-direction: column; gap: 12px; }
+        .filter-group { min-width: unset; }
+        .btn-filter, .btn-reset { width: 100%; text-align: center; box-sizing: border-box; }
+        .results-header { flex-direction: column; gap: 8px; }
+    }
     
     .course-card {
         background: white;
@@ -289,12 +299,15 @@ include 'includes/header.php';
         padding-top: 15px;
         border-top: 2px solid #f5f5f5;
         margin-top: auto;
+        gap: 10px;
+        flex-wrap: wrap;
     }
     
     .course-price {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         color: #667eea;
         font-weight: 700;
+        white-space: nowrap;
     }
     
     .btn-view-course {

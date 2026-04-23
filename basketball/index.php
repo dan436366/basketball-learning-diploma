@@ -280,6 +280,7 @@ include 'includes/header.php';
         color: white;
         padding: 80px 0;
         text-align: center;
+        margin-bottom: -60px;
     }
     
     .cta-section h2 {

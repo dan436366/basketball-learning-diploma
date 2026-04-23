@@ -87,9 +87,10 @@ include '../includes/header.php';
     
     .trainer-nav {
         background: white;
-        padding: 15px 0;
+        padding: 15px 20px;
         margin-bottom: 30px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        border-radius: 8px;
     }
     
     .trainer-nav-links {
@@ -121,9 +122,67 @@ include '../includes/header.php';
     
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
         margin-bottom: 40px;
+    }
+
+    .bottom-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 30px;
+    }
+
+    /* ===== МОБІЛЬНА АДАПТАЦІЯ ===== */
+    @media (max-width: 767px) {
+        .trainer-header { padding: 25px 0; margin-bottom: 0; }
+        .trainer-header h1 { font-size: 1.5rem; }
+
+        .trainer-nav { padding: 10px 20px; margin-bottom: 20px; margin-top: 20px;}
+        .trainer-nav-links { gap: 6px; }
+        .trainer-nav-link { padding: 7px 10px; font-size: 0.82rem; }
+
+        .stats-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-card { padding: 16px; gap: 14px; }
+        .stat-info h3 { font-size: 1.5rem; }
+
+        .section-card { padding: 16px; margin-bottom: 16px; }
+        .section-title { font-size: 1.1rem; }
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .btn-create { width: 100%; text-align: center; box-sizing: border-box; }
+
+        /* Кнопки курсу — кожна на повну ширину */
+        .course-actions {
+            flex-direction: column;
+            gap: 8px;
+        }
+        .course-actions .btn-sm {
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        /* Таблиці — обрізаємо зайве, не виходимо за межі */
+        .bottom-grid { grid-template-columns: 1fr; gap: 0; }
+        .table-responsive { overflow-x: hidden; }
+        table { table-layout: fixed; width: 100%; }
+        table th, table td { 
+            padding: 8px 6px; 
+            font-size: 0.82rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: normal;
+        }
+        /* Колонки таблиці учнів: Учень 35%, Курс 40%, Дата 25% */
+        table th:nth-child(1), table td:nth-child(1) { width: 35%; }
+        table th:nth-child(2), table td:nth-child(2) { width: 40%; }
+        table th:nth-child(3), table td:nth-child(3) { width: 25%; }
     }
     
     .stat-card {
@@ -223,23 +282,35 @@ include '../includes/header.php';
     }
     
     .course-title {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         color: #333;
         font-weight: 600;
         margin-bottom: 8px;
+        word-break: break-word;
     }
     
     .course-stats {
         display: flex;
-        gap: 20px;
+        gap: 12px;
         color: #666;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    .course-stats span {
+        white-space: nowrap;
     }
     
     .course-actions {
         display: flex;
-        gap: 10px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .course-actions .btn-sm {
+        flex: 1 1 auto;
+        text-align: center;
     }
     
     .btn-sm {
@@ -403,9 +474,9 @@ include '../includes/header.php';
         <?php endif; ?>
     </div>
     
-    <div class="row">
+    <div class="bottom-grid">
         <!-- Recent Enrollments -->
-        <div class="col-md-6">
+        <div>
             <div class="section-card">
                 <div class="section-header">
                     <h2 class="section-title">👥 Нові учні</h2>
@@ -441,7 +512,7 @@ include '../includes/header.php';
         </div>
         
         <!-- Recent Reviews -->
-        <div class="col-md-6">
+        <div>
             <div class="section-card">
                 <div class="section-header">
                     <h2 class="section-title">⭐ Останні відгуки</h2>
