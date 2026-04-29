@@ -134,9 +134,10 @@ include '../includes/header.php';
     
     .main-content {
         display: grid;
-        grid-template-columns: 1fr 450px;
+        grid-template-columns: 1fr 420px;
         gap: 30px;
         margin-bottom: 60px;
+        min-width: 0;
     }
     
     .lessons-section {
@@ -144,6 +145,8 @@ include '../includes/header.php';
         padding: 30px;
         border-radius: 15px;
         box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        min-width: 0;
+        overflow: hidden;
     }
     
     .section-title {
@@ -243,6 +246,8 @@ include '../includes/header.php';
         box-shadow: 0 2px 15px rgba(0,0,0,0.08);
         position: sticky;
         top: 20px;
+        min-width: 0;
+        overflow: hidden;
     }
     
     .form-group {
@@ -406,9 +411,30 @@ include '../includes/header.php';
         .main-content {
             grid-template-columns: 1fr;
         }
-        
         .add-lesson-form {
             position: static;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .page-header { padding: 20px 0; margin-bottom: 20px; overflow: hidden; }
+        .page-header h1 { font-size: 1.3rem; word-break: break-word; }
+        .breadcrumb { font-size: 0.8rem; }
+        .main-content { gap: 16px; margin-bottom: 30px; }
+        .lessons-section { padding: 14px; }
+        .add-lesson-form { padding: 14px; }
+        .section-title { font-size: 1.1rem; }
+        .lesson-item { padding: 12px; }
+        .lesson-title { font-size: 1rem; }
+        .form-input, .form-textarea { font-size: 0.92rem; padding: 10px 12px; }
+        .upload-area { padding: 16px 10px; }
+        .upload-area p { font-size: 0.82rem; }
+        .lesson-header { gap: 10px; }
+        .lesson-number { width: 32px; height: 32px; font-size: 0.85rem; }
+        /* Ім'я файлу не виїжджає */
+        .lesson-meta span, .lesson-description { 
+            word-break: break-all; 
+            overflow-wrap: break-word;
         }
     }
 </style>

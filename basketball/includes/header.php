@@ -33,12 +33,17 @@
             --transition: all 0.3s ease;
         }
         
+        html {
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-light);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
         
         /* ========== HEADER ========== */
@@ -49,10 +54,12 @@
             position: sticky;
             top: 0;
             z-index: 1030;
+            overflow: visible;
         }
-        
+
         .navbar .container {
             max-width: 1200px;
+            overflow: visible;
         }
         
         .navbar-brand {

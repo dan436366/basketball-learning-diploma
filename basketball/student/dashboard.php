@@ -338,6 +338,50 @@ include '../includes/header.php';
         color: #666;
         margin-bottom: 20px;
     }
+
+    @media (max-width: 767px) {
+        /* Header */
+        .dashboard-header { padding: 22px 0; margin-bottom: 20px; }
+        .dashboard-header h1 { font-size: 1.3rem; word-break: break-word; }
+
+        /* Stats */
+        .stats-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-card { padding: 14px; gap: 14px; }
+        .stat-info h3 { font-size: 1.5rem; }
+
+        /* Section header */
+        .section-header { flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+        .section-title { font-size: 1.3rem; }
+        .btn-view-all { padding: 8px 14px; font-size: 0.88rem; }
+
+        /* Course card — переходить в колонку */
+        .course-card {
+            flex-direction: column;
+            gap: 12px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+        .course-thumbnail {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+        }
+        .course-title { font-size: 1.05rem; }
+        .course-meta {
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        .btn-continue { font-size: 0.9rem; padding: 9px 16px; }
+
+        /* Plan card */
+        .plan-card { padding: 14px; margin-bottom: 12px; }
+        .plan-header { flex-wrap: wrap; gap: 8px; }
+        .plan-title { font-size: 1rem; }
+        .plan-status { font-size: 0.8rem; padding: 5px 10px; }
+        .plan-progress { gap: 10px; }
+        .plan-progress-text { font-size: 0.82rem; white-space: nowrap; }
+    }
 </style>
 
 <!-- Dashboard Header -->

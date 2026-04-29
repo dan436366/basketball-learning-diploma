@@ -107,6 +107,7 @@ include 'includes/header.php';
         display: grid;
         grid-template-columns: 2fr 1fr;
         gap: 30px;
+        padding: 0 10px;
     }
     
     .course-section {

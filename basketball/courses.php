@@ -102,13 +102,13 @@ include 'includes/header.php';
     .filter-row {
         display: flex;
         gap: 15px;
-        align-items: end;
+        align-items: flex-end;
         flex-wrap: wrap;
     }
     
     .filter-group {
         flex: 1;
-        min-width: 200px;
+        min-width: 180px;
     }
     
     .filter-label {
@@ -116,6 +116,7 @@ include 'includes/header.php';
         margin-bottom: 8px;
         font-weight: 600;
         color: #333;
+        text-align: left;
     }
     
     .filter-input, .filter-select {
@@ -125,6 +126,8 @@ include 'includes/header.php';
         border-radius: 8px;
         font-size: 1rem;
         transition: all 0.3s;
+        box-sizing: border-box;
+        display: block;
     }
     
     .filter-input:focus, .filter-select:focus {
@@ -198,13 +201,26 @@ include 'includes/header.php';
         }
     }
 
-    @media (max-width: 575px) {
-        .courses-hero h1 { font-size: 1.6rem; }
-        .courses-hero { padding: 30px 0; }
+    @media (max-width: 600px) {
+        .courses-hero h1 { font-size: 1.5rem; }
+        .courses-hero { padding: 28px 0; }
         .filters-section { padding: 16px; }
-        .filter-row { flex-direction: column; gap: 12px; }
-        .filter-group { min-width: unset; }
-        .btn-filter, .btn-reset { width: 100%; text-align: center; box-sizing: border-box; }
+        .filter-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+        .filter-group { min-width: unset; flex: none; width: 100%; }
+        .filter-input, .filter-select { width: 100%; }
+        .btn-filter, .btn-reset {
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            height: auto;
+            padding: 12px;
+            line-height: normal;
+            display: block;
+        }
         .results-header { flex-direction: column; gap: 8px; }
     }
     

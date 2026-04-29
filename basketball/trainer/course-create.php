@@ -208,7 +208,7 @@ include '../includes/header.php';
     
     .level-option label {
         display: block;
-        padding: 20px;
+        padding: 16px 10px;
         border: 2px solid #e0e0e0;
         border-radius: 10px;
         cursor: pointer;
@@ -226,33 +226,37 @@ include '../includes/header.php';
     }
     
     .level-icon {
-        font-size: 2rem;
-        margin-bottom: 8px;
+        font-size: 1.8rem;
+        margin-bottom: 6px;
     }
     
     .level-name {
         font-weight: 600;
         color: #333;
+        font-size: 0.9rem;
     }
     
     .form-actions {
         display: flex;
-        gap: 15px;
+        gap: 12px;
         margin-top: 30px;
         padding-top: 30px;
         border-top: 2px solid #f0f0f0;
+        flex-wrap: wrap;
     }
     
     .btn-submit {
-        padding: 15px 40px;
+        padding: 14px 32px;
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         color: white;
         border: none;
         border-radius: 8px;
         font-weight: 700;
-        font-size: 1.1rem;
+        font-size: 1rem;
         cursor: pointer;
         transition: all 0.3s;
+        flex: 1;
+        min-width: 140px;
     }
     
     .btn-submit:hover {
@@ -261,20 +265,42 @@ include '../includes/header.php';
     }
     
     .btn-cancel {
-        padding: 15px 40px;
+        padding: 14px 32px;
         background: white;
         color: #666;
         border: 2px solid #e0e0e0;
         border-radius: 8px;
         font-weight: 600;
-        font-size: 1.1rem;
+        font-size: 1rem;
         text-decoration: none;
         transition: all 0.3s;
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
     }
     
     .btn-cancel:hover {
         background: #f8f9fa;
         color: #666;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    @media (max-width: 767px) {
+        .form-container { padding: 20px 16px; margin-bottom: 30px; }
+        .form-row { grid-template-columns: 1fr; gap: 0; }
+        .level-options { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .level-option label { padding: 12px 6px; }
+        .level-icon { font-size: 1.4rem; }
+        .level-name { font-size: 0.78rem; }
+        .form-actions { flex-direction: column; gap: 10px; }
+        .btn-submit, .btn-cancel { width: 100%; text-align: center; box-sizing: border-box; }
+        .page-header { padding: 22px 0; margin-bottom: 20px; }
+        .page-header h1 { font-size: 1.4rem; }
     }
     
     .error-list {
