@@ -146,9 +146,10 @@ include '../includes/header.php';
     
     .rating-selector {
         display: flex;
-        gap: 10px;
+        gap: 8px;
         justify-content: center;
         margin-bottom: 30px;
+        flex-wrap: nowrap;
     }
     
     .star-input {
@@ -156,7 +157,7 @@ include '../includes/header.php';
     }
     
     .star-label {
-        font-size: 3rem;
+        font-size: 2.4rem;
         color: #ddd;
         cursor: pointer;
         transition: all 0.3s;
@@ -170,7 +171,7 @@ include '../includes/header.php';
     
     .rating-text {
         text-align: center;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: #666;
         margin-top: 15px;
         font-weight: 600;
@@ -198,6 +199,7 @@ include '../includes/header.php';
         resize: vertical;
         font-family: inherit;
         transition: all 0.3s;
+        box-sizing: border-box;
     }
     
     .form-textarea:focus {
@@ -214,19 +216,21 @@ include '../includes/header.php';
     
     .form-actions {
         display: flex;
-        gap: 15px;
+        gap: 12px;
         margin-top: 30px;
+        flex-wrap: wrap;
     }
     
     .btn-submit {
         flex: 1;
-        padding: 15px 30px;
+        min-width: 140px;
+        padding: 14px 24px;
         background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
         color: white;
         border: none;
         border-radius: 10px;
         font-weight: 700;
-        font-size: 1.1rem;
+        font-size: 1rem;
         cursor: pointer;
         transition: all 0.3s;
     }
@@ -242,21 +246,35 @@ include '../includes/header.php';
     }
     
     .btn-cancel {
-        padding: 15px 30px;
+        flex: 1;
+        min-width: 100px;
+        padding: 14px 24px;
         background: white;
         color: #666;
         border: 2px solid #e0e0e0;
         border-radius: 10px;
         font-weight: 600;
-        font-size: 1.1rem;
+        font-size: 1rem;
         text-decoration: none;
         transition: all 0.3s;
         display: inline-block;
+        text-align: center;
+        box-sizing: border-box;
     }
     
     .btn-cancel:hover {
         background: #f8f9fa;
         color: #666;
+    }
+
+    @media (max-width: 600px) {
+        .page-header { padding: 24px 0; margin-bottom: 20px; }
+        .page-header h1 { font-size: 1.5rem; }
+        .review-container { padding: 20px 14px; margin-bottom: 30px; }
+        .star-label { font-size: 1.9rem; }
+        .rating-selector { gap: 4px; }
+        .form-actions { flex-direction: column; }
+        .btn-submit, .btn-cancel { width: 100%; text-align: center; }
     }
     
     .error-list {
