@@ -19,14 +19,10 @@ $stmt = $db->prepare("
 $stmt->execute([$trainerId]);
 $totalStudents = $stmt->fetch()['total'];
 
-$stmt = $db->prepare("
-    SELECT SUM(p.amount) as total
-    FROM payments p
-    JOIN courses c ON p.course_id = c.id
-    WHERE c.trainer_id = ? AND p.status = 'completed'
-");
+// Баланс тренера з trainer_balances (актуальні дані)
+$stmt = $db->prepare("SELECT total_earned FROM trainer_balances WHERE trainer_id = ?");
 $stmt->execute([$trainerId]);
-$totalRevenue = $stmt->fetch()['total'] ?? 0;
+$totalRevenue = $stmt->fetchColumn() ?? 0;
 
 // Мої курси
 $stmt = $db->prepare("
@@ -425,7 +421,7 @@ include '../includes/header.php';
             </div>
         </div>
         
-        <div class="stat-card">
+        <div class="stat-card" style="cursor:pointer;" onclick="window.location.href='balance.php'">
             <div class="stat-icon green">💰</div>
             <div class="stat-info">
                 <h3><?= formatPrice($totalRevenue) ?></h3>

@@ -46,6 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             setFlashMessage('success', 'Ласкаво просимо, ' . htmlspecialchars($user['first_name']) . '!');
             
+            // Якщо є redirect параметр — повертаємо туди
+            if (!empty($_GET['redirect'])) {
+                $redirect = filter_var($_GET['redirect'], FILTER_SANITIZE_URL);
+                // Дозволяємо тільки відносні шляхи (безпека)
+                if (strpos($redirect, 'http') === false) {
+                    header('Location: ' . BASE_URL . '/' . ltrim($redirect, '/'));
+                    exit;
+                }
+            }
+            
             // Перенаправлення в залежності від ролі
             if ($user['role'] === 'admin') {
                 header('Location: admin/dashboard.php');

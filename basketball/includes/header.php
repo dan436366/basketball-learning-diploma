@@ -701,6 +701,9 @@
                                     <li><a class="dropdown-item" href="<?= $urlPrefix ?>trainer/dashboard.php">
                                         <i class="fas fa-chalkboard-teacher"></i>Мої курси
                                     </a></li>
+                                    <li><a class="dropdown-item" href="<?= $urlPrefix ?>trainer/balance.php">
+                                        <i class="fas fa-wallet"></i>Мій баланс
+                                    </a></li>
                                     <li><hr class="dropdown-divider"></li>
                                 <?php else: ?>
                                     <li><a class="dropdown-item" href="<?= $urlPrefix ?>student/dashboard.php">

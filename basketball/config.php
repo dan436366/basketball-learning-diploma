@@ -12,11 +12,20 @@ define('DB_CHARSET', 'utf8mb4');
 define('SESSION_NAME', 'basketball_session');
 define('SESSION_LIFETIME', 3600 * 24 * 7); // 7 днів
 
-// Автоматичне визначення BASE_URL
+// Автоматичне визначення BASE_URL — завжди вказує на корінь проекту /basketball
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
 $host = $_SERVER['HTTP_HOST'];
-$scriptName = dirname($_SERVER['SCRIPT_NAME']);
-define('BASE_URL', $protocol . '://' . $host . $scriptName);
+// Знаходимо корінь проекту (папка basketball) незалежно від поточного скрипту
+$scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+// Піднімаємось до папки basketball (корінь проекту)
+$parts = explode('/', trim($scriptPath, '/'));
+$rootParts = [];
+foreach ($parts as $part) {
+    $rootParts[] = $part;
+    if ($part === 'basketball') break;
+}
+$projectRoot = '/' . implode('/', $rootParts);
+define('BASE_URL', $protocol . '://' . $host . $projectRoot);
 
 // Шляхи
 define('ROOT_PATH', __DIR__);
@@ -29,6 +38,17 @@ define('HASH_COST', 10);
 
 // Налаштування пагінації
 define('ITEMS_PER_PAGE', 12);
+
+
+
+// ── WayForPay ──────────────────────────────────────────────────
+define('WFP_MERCHANT_ACCOUNT', 'test_merch_n1');                              // Merchant login
+define('WFP_MERCHANT_SECRET',  'flk3409refn54t54t*FNJRET');   // Merchant secret key
+define('WFP_MERCHANT_DOMAIN',  'localhost');
+
+// Комісія платформи
+define('PLATFORM_COMMISSION_PERCENT', 20);
+
 
 // Клас для роботи з базою даних
 class Database {
