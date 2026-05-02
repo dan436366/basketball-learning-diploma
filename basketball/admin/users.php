@@ -359,11 +359,11 @@ include '../includes/header.php';
     <!-- Navigation -->
     <nav class="admin-nav">
         <div class="admin-nav-links">
-            <a href="dashboard.php" class="admin-nav-link">📊 Статистика</a>
+            <a href="admin_dashboard.php" class="admin-nav-link">📊 Статистика</a>
             <a href="users.php" class="admin-nav-link active">👥 Користувачі</a>
-            <a href="courses.php" class="admin-nav-link">📚 Курси</a>
-            <a href="payments.php" class="admin-nav-link">💰 Платежі</a>
-            <a href="settings.php" class="admin-nav-link">⚙️ Налаштування</a>
+            <a href="admin_courses.php" class="admin-nav-link">📚 Курси</a>
+            <a href="admin_payments.php" class="admin-nav-link">💰 Платежі</a>
+            <a href="admin_settings.php" class="admin-nav-link">⚙️ Налаштування</a>
         </div>
     </nav>
     

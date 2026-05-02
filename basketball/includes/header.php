@@ -693,7 +693,7 @@
                             </button>
                             <ul class="user-dropdown-menu" id="userDropdownMenu">
                                 <?php if ($user['role'] === 'admin'): ?>
-                                    <li><a class="dropdown-item" href="<?= $urlPrefix ?>admin/dashboard.php">
+                                    <li><a class="dropdown-item" href="<?= $urlPrefix ?>admin/admin_dashboard.php">
                                         <i class="fas fa-tachometer-alt"></i>Панель адміністратора
                                     </a></li>
                                     <li><hr class="dropdown-divider"></li>
