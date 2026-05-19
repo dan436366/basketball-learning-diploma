@@ -3,9 +3,11 @@ require_once 'config.php';
 
 $db = Database::getInstance()->getConnection();
 
-// Отримання всіх тренерів
-$stmt = $db->query("
-    SELECT u.*, 
+// Пошук
+$search = trim($_GET['search'] ?? '');
+
+$sql = "
+    SELECT u.*,
            COUNT(DISTINCT c.id) as courses_count,
            COUNT(DISTINCT e.id) as students_count,
            AVG(r.rating) as avg_rating
@@ -14,9 +16,16 @@ $stmt = $db->query("
     LEFT JOIN enrollments e ON c.id = e.course_id
     LEFT JOIN reviews r ON c.id = r.course_id
     WHERE u.role = 'trainer' AND u.is_active = 1
-    GROUP BY u.id
-    ORDER BY courses_count DESC
-");
+";
+$params = [];
+if ($search) {
+    $sql .= " AND (u.first_name LIKE ? OR u.last_name LIKE ? OR CONCAT(u.first_name,' ',u.last_name) LIKE ?)";
+    $params = ["%$search%", "%$search%", "%$search%"];
+}
+$sql .= " GROUP BY u.id ORDER BY courses_count DESC";
+
+$stmt = $db->prepare($sql);
+$stmt->execute($params);
 $trainers = $stmt->fetchAll();
 
 $pageTitle = 'Наші тренери';
@@ -203,6 +212,75 @@ include 'includes/header.php';
         box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         color: white;
     }
+
+    .btn-contact {
+        width: 100%;
+        padding: 11px;
+        background: white;
+        color: #667eea;
+        border: 2px solid #667eea;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-align: center;
+        display: block;
+        transition: all 0.3s;
+        margin-top: 10px;
+        box-sizing: border-box;
+    }
+
+    .btn-contact:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* Пошук */
+    .search-box {
+        max-width: 480px;
+        margin: 0 auto 30px;
+    }
+
+    .search-form {
+        display: flex;
+        gap: 10px;
+        background: white;
+        padding: 8px;
+        border-radius: 50px;
+        box-shadow: 0 4px 20px rgba(0,0,0,.12);
+    }
+
+    .search-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        padding: 8px 16px;
+        font-size: 1rem;
+        background: transparent;
+        min-width: 0;
+    }
+
+    .search-btn {
+        padding: 10px 24px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 40px;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all .2s;
+    }
+
+    .search-btn:hover { opacity: .9; }
+
+    .search-result-count {
+        text-align: center;
+        color: rgba(255,255,255,.8);
+        font-size: .9rem;
+        margin-top: -10px;
+        margin-bottom: 20px;
+    }
     
     .no-trainers {
         text-align: center;
@@ -223,6 +301,23 @@ include 'includes/header.php';
     <div class="container">
         <h1>👨‍🏫 Наші тренери</h1>
         <p>Професіонали з багаторічним досвідом готові допомогти вам</p>
+
+        <!-- Пошук -->
+        <div class="search-box">
+            <form method="GET" class="search-form">
+                <input type="text" name="search" class="search-input"
+                       placeholder="Пошук тренера за іменем..."
+                       value="<?= htmlspecialchars($search) ?>">
+                <button type="submit" class="search-btn">🔍 Знайти</button>
+            </form>
+        </div>
+
+        <?php if ($search): ?>
+        <div class="search-result-count">
+            Знайдено: <strong><?= count($trainers) ?></strong> тренер(ів) за запитом "<?= htmlspecialchars($search) ?>"
+            — <a href="trainers.php" style="color:white;text-decoration:underline;">скинути</a>
+        </div>
+        <?php endif; ?>
     </div>
 </section>
 
@@ -231,8 +326,11 @@ include 'includes/header.php';
     <div class="container">
         <?php if (empty($trainers)): ?>
             <div class="no-trainers">
-                <h3>Тренерів поки немає</h3>
-                <p>Скоро з'являться нові тренери</p>
+                <h3><?= $search ? 'Тренерів не знайдено' : 'Тренерів поки немає' ?></h3>
+                <p><?= $search ? 'Спробуйте інший запит' : 'Скоро з\'являться нові тренери' ?></p>
+                <?php if ($search): ?>
+                <a href="trainers.php" style="display:inline-block;margin-top:12px;padding:10px 24px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;text-decoration:none;border-radius:8px;font-weight:600;">Показати всіх тренерів</a>
+                <?php endif; ?>
             </div>
         <?php else: ?>
             <div class="trainers-grid">
@@ -262,7 +360,7 @@ include 'includes/header.php';
                                 </div>
                             </div>
                         </div>
-                        
+
                         <?php if ($trainer['avg_rating']): ?>
                         <div class="trainer-rating">
                             <div class="rating-stars">
@@ -273,15 +371,26 @@ include 'includes/header.php';
                             </div>
                         </div>
                         <?php endif; ?>
-                        
+
                         <?php if ($trainer['bio']): ?>
                         <p class="trainer-bio"><?= htmlspecialchars($trainer['bio']) ?></p>
                         <?php endif; ?>
-                        
+
                         <?php if ($trainer['courses_count'] > 0): ?>
                         <a href="courses.php?trainer=<?= $trainer['id'] ?>" class="btn-view-courses">
                             Переглянути курси тренера
                         </a>
+                        <?php endif; ?>
+
+                        <!-- Кнопка написати тренеру -->
+                        <?php if (isLoggedIn() && $_SESSION['user_role'] === 'student'): ?>
+                            <a href="create-chat.php?trainer_id=<?= $trainer['id'] ?>" class="btn-contact">
+                                💬 Написати тренеру
+                            </a>
+                        <?php elseif (!isLoggedIn()): ?>
+                            <a href="login.php" class="btn-contact">
+                                💬 Увійдіть щоб написати
+                            </a>
                         <?php endif; ?>
                     </div>
                 </div>

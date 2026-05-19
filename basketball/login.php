@@ -226,12 +226,6 @@ include 'includes/header.php';
             Не маєте акаунту? <a href="register.php">Зареєструватись</a>
         </div>
         
-        <div class="demo-accounts">
-            <h6>Тестові акаунти:</h6>
-            <p><strong>Адмін:</strong> admin@basketball.com / admin123</p>
-            <p><strong>Тренер:</strong> trainer1@basketball.com / trainer123</p>
-            <p><strong>Учень:</strong> student@basketball.com / student123</p>
-        </div>
     </div>
 </div>
 

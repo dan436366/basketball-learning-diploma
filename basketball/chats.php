@@ -18,7 +18,7 @@ if ($userRole === 'student') {
                (SELECT created_at FROM chat_messages WHERE chat_id = c.id ORDER BY created_at DESC LIMIT 1) as last_message_time
         FROM chats c
         JOIN users u ON c.trainer_id = u.id
-        JOIN courses co ON c.course_id = co.id
+        LEFT JOIN courses co ON c.course_id = co.id
         WHERE c.student_id = ?
         ORDER BY c.last_message_at DESC, c.created_at DESC
     ");
@@ -34,7 +34,7 @@ if ($userRole === 'student') {
                (SELECT created_at FROM chat_messages WHERE chat_id = c.id ORDER BY created_at DESC LIMIT 1) as last_message_time
         FROM chats c
         JOIN users u ON c.student_id = u.id
-        JOIN courses co ON c.course_id = co.id
+        LEFT JOIN courses co ON c.course_id = co.id
         WHERE c.trainer_id = ?
         ORDER BY c.last_message_at DESC, c.created_at DESC
     ");
@@ -268,7 +268,11 @@ include 'includes/header.php';
                                         ?>
                                     </div>
                                     <div class="chat-course">
-                                        📚 <?= htmlspecialchars($chat['course_title']) ?>
+                                        <?php if (!empty($chat['course_title'])): ?>
+                                            📚 <?= htmlspecialchars($chat['course_title']) ?>
+                                        <?php else: ?>
+                                            💬 Індивідуальна консультація
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="chat-time">

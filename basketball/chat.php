@@ -22,7 +22,7 @@ if ($userRole === 'student') {
                co.title as course_title
         FROM chats c
         JOIN users u ON c.trainer_id = u.id
-        JOIN courses co ON c.course_id = co.id
+        LEFT JOIN courses co ON c.course_id = co.id
         WHERE c.id = ? AND c.student_id = ?
     ");
     $stmt->execute([$chatId, $userId]);
@@ -34,7 +34,7 @@ if ($userRole === 'student') {
                co.title as course_title
         FROM chats c
         JOIN users u ON c.student_id = u.id
-        JOIN courses co ON c.course_id = co.id
+        LEFT JOIN courses co ON c.course_id = co.id
         WHERE c.id = ? AND c.trainer_id = ?
     ");
     $stmt->execute([$chatId, $userId]);
@@ -507,9 +507,20 @@ include 'includes/header.php';
                 ?>
             </h2>
             <div class="chat-header-course">
-                📚 <?= htmlspecialchars($chat['course_title']) ?>
+                <?php if (!empty($chat['course_title'])): ?>
+                    📚 <?= htmlspecialchars($chat['course_title']) ?>
+                <?php else: ?>
+                    💬 Індивідуальна консультація
+                <?php endif; ?>
             </div>
         </div>
+
+        <?php if ($userRole === 'trainer'): ?>
+        <a href="trainer/course-create.php"
+           style="margin-left:auto;padding:9px 18px;background:linear-gradient(135deg,#f093fb,#f5576c);color:white;text-decoration:none;border-radius:8px;font-weight:600;font-size:.88rem;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:6px;">
+            ➕ Створити курс
+        </a>
+        <?php endif; ?>
     </div>
     
     <!-- Messages -->

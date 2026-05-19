@@ -28,17 +28,17 @@ $stmt = $db->prepare("SELECT COUNT(*) as total FROM enrollments WHERE user_id = 
 $stmt->execute([$userId]);
 $completedCourses = $stmt->fetch()['total'];
 
-// Останні плани тренувань
-$stmt = $db->prepare("
-    SELECT tp.*, u.first_name, u.last_name,
-           (SELECT COUNT(*) FROM plan_tasks WHERE plan_id = tp.id) as total_tasks,
-           (SELECT COUNT(*) FROM plan_tasks WHERE plan_id = tp.id AND is_completed = 1) as completed_tasks
-    FROM training_plans tp
-    JOIN users u ON tp.trainer_id = u.id
-    WHERE tp.user_id = ?
-    ORDER BY tp.created_at DESC
-    LIMIT 3
-");
+// // Останні плани тренувань
+// $stmt = $db->prepare("
+//     SELECT tp.*, u.first_name, u.last_name,
+//            (SELECT COUNT(*) FROM plan_tasks WHERE plan_id = tp.id) as total_tasks,
+//            (SELECT COUNT(*) FROM plan_tasks WHERE plan_id = tp.id AND is_completed = 1) as completed_tasks
+//     FROM training_plans tp
+//     JOIN users u ON tp.trainer_id = u.id
+//     WHERE tp.user_id = ?
+//     ORDER BY tp.created_at DESC
+//     LIMIT 3
+// ");
 $stmt->execute([$userId]);
 $trainingPlans = $stmt->fetchAll();
 
@@ -411,13 +411,13 @@ include '../includes/header.php';
             </div>
         </div>
         
-        <div class="stat-card">
+        <!-- <div class="stat-card">
             <div class="stat-icon orange">🎯</div>
             <div class="stat-info">
                 <h3><?= count($trainingPlans) ?></h3>
                 <p>Планів тренувань</p>
             </div>
-        </div>
+        </div> -->
     </div>
     
     <!-- My Courses -->
